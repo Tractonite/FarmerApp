@@ -1,0 +1,38 @@
+Requirements
+-------------
+- Flask
+- Mysql
+
+Features
+--------
+- user auth
+    - register
+    - login
+    - logout
+
+- CRUD operations
+
+
+Deploy to live server
+
+
+Juding criteria
+---------------
+- Creativity
+- Technical Complexity
+- Overall impact
+- Bonus Points
+
+
+Milestones
+----------
+- Project Brainstroming
+- Test case preparation
+- Database Design
+- User Authentication
+- Baisc UI Design
+- Database Integration
+- CRUD Functionality
+- Data Visualization
+- Testing and Debugging
+- Deployment
