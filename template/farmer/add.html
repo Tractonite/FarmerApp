@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+Addproduct
+{% endblock %}
+
+{% block body %}
+{% if msg %}
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        {{ msg }}
+    </div>
+</div>
+{% endif %}
+<div class="card" id="topdiv0">
+    <form class="px-4 py-3" method="POST" action="/farmer/add">
+        <h5 class="card-title">Add Product</h5>
+        <div class="form-group">
+            <label for="username">Product Name</label>
+            <input type="text" required="required" class="form-control" name="name" autofocus>
+        </div>
+        <div class="form-group">
+            <label for="password">Description</label>
+            <input type="text" required="required" class="form-control" name="desc">
+        </div>
+        <div class="form-group">
+            <label for="username">Price</label>
+            <input type="text" required="required" class="form-control" name="price" autofocus>
+        </div>
+        <div class="form-group">
+            <label for="username">Unit</label>
+            <input type="text" required="required" class="form-control" name="unit" autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+{% endblock %}

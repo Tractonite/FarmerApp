@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Products {% endblock %}
+
+{% block body %}
+<div class='container'>
+    <h1>Products</h1>
+    {% if products %}
+    <div class='row'>
+        {% for product in products %}
+        <div class='col-md-4'>
+            <div class='card'>
+                <div class='card-body'>
+                    <h5 class='card-title'>{{ product.name }}</h5>
+                    <p class='card-text'>{{ product.description }}</p>
+                    <p class='card-text'>{{ product.price }} </p>
+                    <p class='card-text'>{{ product.unit }}</p>
+                    <a href='/farmer/edit/{{ product.id }}' class='btn btn-primary'>Edit</a>
+                    <br />
+                    <form method='POST' action='/farmer/delete/{{ product.id }}'>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No products.</p>
+    {% endif %}
+</div>
+{% endblock %}

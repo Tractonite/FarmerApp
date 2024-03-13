@@ -22,9 +22,9 @@ from views.admin import admin_bp
 from views.product import product_bp
 from views.user import user_bp
 
-app.register_blueprint(admin_bp)
-app.register_blueprint(product_bp)
-app.register_blueprint(user_bp)
+# app.register_blueprint(admin_bp)
+# app.register_blueprint(product_bp)
+# app.register_blueprint(user_bp)
 
 # Define a default route
 @app.route('/')
@@ -155,6 +155,7 @@ def login_farmer():
 			return render_template("error.html", message="Invalid username and/or password")
 		# Remember which user has logged in
 		session["username"] = result.username
+		session["farmerId"] = result.id
 		session["role"] = "farmer"
 		return redirect("/farmer/dashboard")
 	return render_template("farmer/login.html")
@@ -245,25 +246,70 @@ def farmer_dashboard():
 
 
 ## Farmer controllers
+
+# get all products
+@app.route('/farmer/products')
+def products():
+    products = Product.query.all()
+    print(products)
+    return render_template('farmer/products.html', products=products)
+
 # add prodcut
 @app.route("/farmer/add", methods=["GET", "POST"])
-def farmer_add():
+def farmer_add_product():
 	if request.method=="POST":
 		name = request.form.get("name")
 		desc = request.form.get("desc")
 		price = request.form.get("price")
 		unit = request.form.get("unit")
-		# new_user = 
+		new_user = Product(name=name, description=desc, price=price, unit=unit,user_id=session.get("farmerId"))
 		try:
-			# db.session.add(new_user)
+			print(session.get("farmerId"))
+			db.session.add(new_user)
 			db.session.commit()
-		except e:
+		except Exception as e:
 			print(e)
-			return render_template("error.html", message="Error adding")
+			return render_template("error.html", message="Failed to add new product")
 		return redirect("/farmer/dashboard")
-	return render_template("farmer/login.html")
+	return render_template("farmer/add.html")
 
-	
+# edit product
+@app.route('/farmer/edit/<int:id>', methods=['GET', 'POST'])
+def edit_product(id):
+    product = Product.query.get(id)
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.description = request.form['desc']
+        product.price = request.form['price']
+        product.unit = request.form['unit']
+        db.session.commit()
+        return redirect('/farmer/products')
+    return render_template('farmer/edit.html', product=product)
+
+# delete product
+@app.route('/farmer/delete/<int:id>', methods=['POST'])
+def delete_product(id):
+	if request.method == "POST":
+		product = Product.query.get(id)
+		db.session.delete(product)
+		db.session.commit()
+		return redirect('/farmer/products')
+	return render_template("error.html", message="Deleted")
+
+@app.route('/farmer/product/int:product_id', methods=['PUT'])
+def update_product(product_id):
+    product = Product.query.get_or_404(product_id)
+    if request.method == 'PUT':
+        name = request.json.get('name', product.name)
+        desc = request.json.get('desc', product.desc)
+        price = request.json.get('price', product.price)
+        unit = request.json.get('unit', product.unit)
+        product.name = name
+        product.desc = desc
+        product.price = price
+        product.unit = unit
+        db.session.commit()
+        return jsonify({'message': 'Product updated successfully', 'product': product.to_dict()})
 
 
 

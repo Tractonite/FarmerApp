@@ -7,7 +7,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     unit = db.Column(db.Integer, nullable=False)
     image = db.Column(db.String(200))
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def repr(self):
         return '<Product >'.format(self.name)
