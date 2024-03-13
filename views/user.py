@@ -8,7 +8,7 @@ def login():
 
 @user_bp.route('/register')
 def register():
-    return render_template('user/register.html')
+    return render_template('user/signup.html')
 
 @user_bp.route('/profile')
 def profile():

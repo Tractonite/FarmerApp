@@ -13,8 +13,8 @@ login
 </div>
 {% endif %}
 <div class="card" id="topdiv0">
-    <form class="px-4 py-3" method="POST" action="/login">
-        <h5 class="card-title">Login to Local Market</h5>
+    <form class="px-4 py-3" method="POST" action="/farmer/login">
+        <h5 class="card-title">Login as Farmer</h5>
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" required="required" class="form-control" name="username" placeholder="bob" autofocus>
@@ -26,6 +26,6 @@ login
         <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
     <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="/signup">New around here? Sign up</a>
+    <a class="dropdown-item" href="/farmer/signup">New around here? Sign up</a>
 </div>
 {% endblock %}

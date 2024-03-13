@@ -11,6 +11,7 @@ Features
     - logout
 
 - CRUD operations
+- Data Visualization 
 
 
 Deploy to live server
