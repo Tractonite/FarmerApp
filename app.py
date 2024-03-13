@@ -91,7 +91,8 @@ def signup():
 		try:
 			db.session.add(new_user)
 			db.session.commit()
-		except:
+		except Exception as e:
+			print(e)
 			return render_template("error.html", message="Username already exists!")
 		return render_template("admin/login.html", msg="Account created!")
 	return render_template("admin/signup.html")
@@ -202,6 +203,29 @@ def login_user():
 		return redirect("/farmer/dashboard")
 	return render_template("farmer/login.html")
 
+
+
+# @app.route('/')
+# def custhomePage():
+#     # item_name = request.form["search_item"]
+#     query=f"select * from market"
+#     mycursor.execute(query)
+#     data=mycursor.fetchall()
+#     return render_template('customerHomepage.html',sqldata = data)
+
+
+
+# @app.route('/showItems', methods=["POST"])
+# def showitems():
+#     if request.method == "POST":
+#         item_name = request.form["search_item"]
+#         query=f"select * from market where item_name like '%{item_name}%'"
+#         mycursor.execute(query)
+#         data=mycursor.fetchall()
+#         return render_template('showItems.html',sqldata = data)
+
+
+
 #logout
 @app.route("/logout")
 def logout():
@@ -223,15 +247,15 @@ def farmer_dashboard():
 ## Farmer controllers
 # add prodcut
 @app.route("/farmer/add", methods=["GET", "POST"])
-def login_farmer():
+def farmer_add():
 	if request.method=="POST":
 		name = request.form.get("name")
 		desc = request.form.get("desc")
 		price = request.form.get("price")
 		unit = request.form.get("unit")
-		new_user = 
+		# new_user = 
 		try:
-			db.session.add(new_user)
+			# db.session.add(new_user)
 			db.session.commit()
 		except e:
 			print(e)
