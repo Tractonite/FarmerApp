@@ -8,6 +8,7 @@ from flask_session import Session
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
+import plotly.graph_objs as go
 
 # Initialize the app and set the configuration
 app = Flask(__name__, template_folder='template')
@@ -242,7 +243,14 @@ def admin_dashboard():
 @app.route("/farmer/dashboard")
 @is_farmer
 def farmer_dashboard():
-	return render_template("farmer/dashboard.html")
+	 # Get the number of products in the database
+    product_count = Product.query.count()
+
+    # Create a Plotly bar chart
+    fig = go.Figure(data=[go.Bar(x=['Products'], y=[product_count])])
+    div = fig.to_html(full_html=False)
+
+    return render_template("farmer/dashboard.html", div=div, product_count=product_count)
 
 
 ## Farmer controllers
